@@ -1,0 +1,37 @@
+.Coffee {
+    width: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.CoffeeButton {
+    width: 10%;
+    height: 8vh;
+    max-height: 10%;
+    border: none;
+    background-color: rgb(160, 211, 235);
+    border-radius: 0;
+    margin: 0;
+    box-shadow: inset 1px 1px 1px rgb(247, 249, 250);
+}
+
+.CoffeeButton-android, .CoffeeButton-ios {
+    height: 5vh;
+}
+
+.CoffeeButton.clicked {
+    background-color: rgb(245, 217, 180);
+    box-shadow: inset 1px 1px 1px rgb(245, 240, 226);
+}
+
+.CoffeeButton.success {
+    background-color: rgb(44, 177, 66);
+    box-shadow: inset 1px 1px 1px rgb(181, 202, 209);
+}
+
+.imgAd {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
