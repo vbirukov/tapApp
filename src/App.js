@@ -9,7 +9,7 @@ import './App.css';
 import PARTNERS from "./partners";
 
 import Home from './panels/Home';
-import Coffee from './panels/Coffee';
+import Game from './panels/Game';
 
 const PARTNER_FOUND = 'partner_found';
 const MODAL_CARD_TO_THE_WALL = 'push_to_wall';
@@ -74,15 +74,16 @@ class App extends Component {
 				document.body.attributes.setNamedItem(schemeAttribute);
 			}
 		});
-		async function fetchData() {
-			const user = await bridge.send('VKWebAppGetUserInfo');
-			this.setState({
-				fetchedUser: user,
-				popout: null
-			});
-		}
-		fetchData();
+		this.fetchData();
 	};
+
+	fetchData = async function() {
+		const user = await bridge.send('VKWebAppGetUserInfo');
+		this.setState({
+			fetchedUser: user,
+			popout: null
+		});
+	}
 
 	go(e) {
 		this.setState({
@@ -128,7 +129,7 @@ class App extends Component {
 						action: () => {
 							this.setState({
 								activeModal: null,
-								activePanel: 'coffee'
+								activePanel: 'game'
 							});
 						}
 					}]} >
@@ -190,11 +191,11 @@ class App extends Component {
 					id='home'
 					fetchedUser={this.state.fetchedUser}
 					go={this.go}
-					findCafe={this.findPartner}
-					findPartner={this.findPartner}
-					selectPartner={this.selectPartner} />
-				<Coffee
-					id='coffee'
+					findCafe={this.findPartner.bind(this)}
+					findPartner={this.findPartner.bind(this)}
+					selectPartner={this.selectPartner.bind(this)} />
+				<Game
+					id='game'
 					victoryMessage={this.victoryMessage}
 					partner={this.state.nearestPartner}
 					winCoord={this.state.winCoord}

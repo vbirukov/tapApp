@@ -1,0 +1,24 @@
+.GameButton {
+    height: 100%;
+    flex-grow: 1;
+    border: none;
+    background: linear-gradient(145deg, #a1d4ec, #ebf8e1, #a1d4ec);
+    border-radius: 0;
+    margin: 0;
+    box-shadow: inset 1px 1px 1px rgb(247, 249, 250);
+}
+
+.GameButton.cold {
+    background-color: rgb(245, 217, 180);
+    box-shadow: inset 1px 1px 1px rgb(245, 240, 226);
+}
+
+.GameButton.warm {
+    background-color: rgb(60, 147, 255);
+    box-shadow: inset 1px 1px 1px rgb(181, 200, 255);
+}
+
+.GameButton.success {
+    background-color: rgb(44, 177, 66);
+    box-shadow: inset 1px 1px 1px rgb(225, 255, 213);
+}

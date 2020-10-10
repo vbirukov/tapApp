@@ -6,27 +6,54 @@ import PanelHeader from '@vkontakte/vkui/dist/components/PanelHeader/PanelHeader
 import PanelHeaderButton from '@vkontakte/vkui/dist/components/PanelHeaderButton/PanelHeaderButton';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
+import Board from "../components/Board";
+import './Game.css';
 
-import './Coffee.css';
-import ad from '../img/ad.jpg';
-
-
+const BASE_ATTEMPTS = 10;
 const osName = platform();
 
-class Coffee extends Component {
+const successSound = new Audio('/audio/click_01.mp3');
+const coldSound = new Audio('/audio/colder.mp3');
+const winSound = new Audio('/audio/click_01.mp3');
 
-    state = {
-        headerCaption: 'Угадай, где чашка кофе',
-        isFinished: false,
-        clicked: [],
-        clickCounter: 0,
-        attempsLeft: 10,
-        showAd: false
+class Game extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = this.getInitState();
     }
 
-    clicked = [];
+    getInitState() {
+        return {
+            board: this.createBoardInfo(10, 20),
+            headerCaption: 'Угадай, где чашка кофе',
+            isFinished: false,
+            clicked: [],
+            clickCounter: 0,
+            attempsLeft: 10,
+            showAd: false,
+            prevDistance: undefined
+        };
+    }
 
-    prevDistance: undefined;
+    createBoardInfo(width, height) {
+        const boardInfo = [];
+        for (let y = 0; y< height; y++) {
+            let row = [];
+            for (let x = 0; x < width; x++ ) {
+                row.push({
+                    clicked: false,
+                    distance: null,
+                    coords: {
+                        x,
+                        y
+                    }
+                });
+            }
+            boardInfo.push(row);
+        }
+        return boardInfo;
+    }
 
     showAd() {
         this.setState({
@@ -53,10 +80,12 @@ class Coffee extends Component {
         this.props.showBuyMoreTaps();
     }
 
-    buttonClick(x, y, index) {
+    buttonClick(cellModel) {
+        const x = cellModel.coords.x;
+        const y = cellModel.coords.y;
         this.setState({
             clickCounter: this.state.clickCounter + 1,
-            attempsLeft: 10 + this.props.payedAttempts - this.state.clickCounter - 1
+            attempsLeft: BASE_ATTEMPTS + this.props.payedAttempts - this.state.clickCounter - 1
         });
         if (this.state.clickCounter === 2 || this.state.clickCounter === 5 || this.state.clickCounter === 8) {
             this.showAd();
@@ -68,60 +97,66 @@ class Coffee extends Component {
                 headerCaption: 'Победа!',
                 isFinished: true
             });
-            if (!this.state.winIndex) {
-                this.setState({
-                    winIndex: index
-                })
-            }
             this.props.victoryMessage();
+            winSound.play();
             return
         }
-        let tmp = this.state.clicked;
-        tmp.push(index);
-        this.setState({
-            clicked: tmp
-        })
-        this.state.clicked.includes(index);
         const distanceToWin = this.getDistance(x, y);
-        if (this.prevDistance) {
+        const newBoard = [...this.state.board];
+        if (this.state.prevDistance) {
             if (distanceToWin === 1) {
+                newBoard[x][y].distance = 'hot';
                 this.setState({
+                    board: newBoard,
                     headerCaption: 'Горячо'
                 });
-            } else if (this.prevDistance > distanceToWin) {
-                console.log('Теплее');
+                successSound.play();
+            } else if (this.state.prevDistance > distanceToWin) {
+                newBoard[x][y].distance = 'warm';
                 this.setState({
+                    board: newBoard,
                     headerCaption: 'Теплее'
                 });
-            } else if (this.prevDistance < distanceToWin) {
-                console.log('Холоднее');
+                successSound.play();
+            } else if (this.state.prevDistance < distanceToWin) {
+                newBoard[x][y].distance = 'cold';
                 this.setState({
+                    board: newBoard,
                     headerCaption: 'Холоднее'
                 });
+                coldSound.play();
             }
         } else {
             if (distanceToWin === 1) {
+                newBoard[x][y].distance = 'hot';
                 this.setState({
+                    board: newBoard,
                     headerCaption: 'Горячо'
                 });
+                coldSound.play();
             } else if (distanceToWin > 1 && distanceToWin < 4) {
+                newBoard[x][y].distance = 'warm';
                 this.setState({
+                    board: newBoard,
                     headerCaption: 'Тепло'
                 });
+                successSound.play();
             } else {
+                newBoard[x][y].distance = 'cold';
                 this.setState({
+                    board: newBoard,
                     headerCaption: 'Холодно'
                 });
+                coldSound.play();
             }
         }
-        this.prevDistance = distanceToWin;
+        this.setState({
+            prevDistance: distanceToWin
+        });
     }
 
     getDistance(x, y) {
-        const rowsDiff = Math.abs(x - this.props.winCoord.x);
-        const colsDiff = Math.abs(y - this.props.winCoord.y);
-        const distance =  rowsDiff + colsDiff;
-        return distance
+        return  Math.abs(x - this.props.winCoord.x) + Math.abs(y - this.props.winCoord.y);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -130,33 +165,7 @@ class Coffee extends Component {
         })
     }
 
-    renderButton(x, y, index) {
-        let cls = ['CoffeeButton'];
-        cls.push('CoffeeButton-' + platform());
-        if(this.state.winIndex === index) {
-            cls.push("success")
-        } else {
-            this.state.clicked.includes(index) ? cls.push("clicked") : cls.push("");
-        }
-        return (<button
-            onClick={() => {this.buttonClick(x, y, index)}}
-            className={cls.join(' ')}
-            key={index} />)
-    }
-
     render () {
-
-        let board = [];
-        let index = 0;
-        for (let x = 1; x< 11; x++) {
-            let row = [];
-            for (let y = 1; y < 11; y++ ) {
-                row.push(this.renderButton(x, y, index));
-                index++
-            }
-            board.push(row);
-        }
-
 
         return (
             <Panel id={this.props.id}>
@@ -169,25 +178,27 @@ class Coffee extends Component {
                     {this.state.headerCaption}
                 </PanelHeader>
 
-                { this.state.showAd ?
+                {this.state.showAd ?
                     <FixedLayout vertical="bottom">
                         <img
+                            alt={'ads'}
                             className="imgAd"
                             src={require('../img/ad.jpg')}/>
-                        <PromoBanner isCloseButtonHidden="true" bannerData={this.promoBannerProps} />
+                        <PromoBanner isCloseButtonHidden="true" bannerData={this.promoBannerProps}/>
                     </FixedLayout> :
-                    <div className='Coffee'>
-                        { board }
-                    </div> }
-
+                    <Board
+                        boardModel={this.state.board}
+                        buttonClickHandler={this.buttonClick.bind(this)}/>
+                }
             </Panel>
         )
     }
 };
 
-Coffee.propTypes = {
+Game.propTypes = {
     winCoord: PropTypes.object.isRequired,
     go: PropTypes.func.isRequired,
+    payedAttempts: PropTypes.number
 };
 
-export default Coffee;
+export default Game;
