@@ -105,21 +105,21 @@ class Game extends Component {
         const newBoard = [...this.state.board];
         if (this.state.prevDistance) {
             if (distanceToWin === 1) {
-                newBoard[x][y].distance = 'hot';
+                newBoard[y][x].distance = 'hot';
                 this.setState({
                     board: newBoard,
                     headerCaption: 'Горячо'
                 });
                 successSound.play();
             } else if (this.state.prevDistance > distanceToWin) {
-                newBoard[x][y].distance = 'warm';
+                newBoard[y][x].distance = 'warm';
                 this.setState({
                     board: newBoard,
                     headerCaption: 'Теплее'
                 });
                 successSound.play();
             } else if (this.state.prevDistance < distanceToWin) {
-                newBoard[x][y].distance = 'cold';
+                newBoard[y][x].distance = 'cold';
                 this.setState({
                     board: newBoard,
                     headerCaption: 'Холоднее'
@@ -128,21 +128,21 @@ class Game extends Component {
             }
         } else {
             if (distanceToWin === 1) {
-                newBoard[x][y].distance = 'hot';
+                newBoard[y][x].distance = 'hot';
                 this.setState({
                     board: newBoard,
                     headerCaption: 'Горячо'
                 });
                 coldSound.play();
             } else if (distanceToWin > 1 && distanceToWin < 4) {
-                newBoard[x][y].distance = 'warm';
+                newBoard[y][x].distance = 'warm';
                 this.setState({
                     board: newBoard,
                     headerCaption: 'Тепло'
                 });
                 successSound.play();
             } else {
-                newBoard[x][y].distance = 'cold';
+                newBoard[y][x].distance = 'cold';
                 this.setState({
                     board: newBoard,
                     headerCaption: 'Холодно'
