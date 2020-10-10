@@ -12,7 +12,7 @@ import './Game.css';
 const BASE_ATTEMPTS = 10;
 const osName = platform();
 
-const successSound = new Audio('/audio/click_01.mp3');
+const successSound = new Audio('/audio/click_02.mp3');
 const coldSound = new Audio('/audio/colder.mp3');
 const winSound = new Audio('/audio/click_01.mp3');
 
@@ -177,19 +177,22 @@ class Game extends Component {
                     Попыток:  { this.state.attempsLeft } <span> </span>
                     {this.state.headerCaption}
                 </PanelHeader>
+                <div style={{height: '100%'}}>
+                    {
+                        this.state.showAd ?
+                            <FixedLayout vertical="bottom">
+                                <img
+                                    alt={'ads'}
+                                    className="imgAd"
+                                    src={require('../img/ad.jpg')}/>
+                                <PromoBanner isCloseButtonHidden="true" bannerData={this.promoBannerProps}/>
+                            </FixedLayout> :
+                            <Board
+                                boardModel={this.state.board}
+                                buttonClickHandler={this.buttonClick.bind(this)}/>
+                    }
+                </div>
 
-                {this.state.showAd ?
-                    <FixedLayout vertical="bottom">
-                        <img
-                            alt={'ads'}
-                            className="imgAd"
-                            src={require('../img/ad.jpg')}/>
-                        <PromoBanner isCloseButtonHidden="true" bannerData={this.promoBannerProps}/>
-                    </FixedLayout> :
-                    <Board
-                        boardModel={this.state.board}
-                        buttonClickHandler={this.buttonClick.bind(this)}/>
-                }
             </Panel>
         )
     }

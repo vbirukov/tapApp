@@ -5,3 +5,9 @@
 .Prize_Button {
     margin: auto;
 }
+
+.flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

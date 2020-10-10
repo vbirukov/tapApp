@@ -201,7 +201,7 @@ class App extends Component {
 					winCoord={this.state.winCoord}
 					showBuyMoreTaps={this.showMoney}
 					payedAttempts={this.state.payedAttempts}
-					go={this.go} />
+					go={this.go.bind(this)} />
 			</View>
 		);
 	}

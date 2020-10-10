@@ -34,24 +34,26 @@ const Home = ({ id, go, fetchedUser, findPartner, selectPartner }) => {
 				</Div>
 			</Group>
 			<Group header={<Header mode="secondary">Возможные призы</Header>}>
-				<Button
-					size="l"
-					level="2"
-					onClick={findPartner}>
-					Чашка кофе
-				</Button>
-				<Button
-					size="l"
-					level="2"
-					onClick={findPartner}>
-					Скидка
-				</Button>
-				<Button
-					size="l"
-					level="2"
-					onClick={findPartner}>
-					АВТОМОБИЛЬ!!!
-				</Button>
+				<div className={'flexCenter'} >
+					<Button
+						size="l"
+						level="2"
+						onClick={findPartner}>
+						Чашка кофе
+					</Button>
+					<Button
+						size="l"
+						level="2"
+						onClick={findPartner}>
+						Скидка
+					</Button>
+					<Button
+						size="l"
+						level="2"
+						onClick={findPartner}>
+						АВТОМОБИЛЬ!!!
+					</Button>
+				</div>
 			</Group>
 		</Panel>
 	)

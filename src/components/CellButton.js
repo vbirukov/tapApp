@@ -12,7 +12,7 @@ const CellButton = (props) => {
 }
 
 CellButton.propTypes = {
-    CellModel: PropTypes.array.isRequired,
+    CellModel: PropTypes.object.isRequired,
     clickHandler: PropTypes.func.isRequired,
 };
 
