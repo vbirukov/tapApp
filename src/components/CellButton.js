@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import './Button.css'
 
 const CellButton = (props) => {
-
     return (
         <button
             onClick={() => {props.clickHandler(props.CellModel)}}
