@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import './Button.css'
 
 const CellButton = (props) => {
+
+    const {cellData, setCellData} = useState(props.CellModel)
+
+    const clickHandler = () => {
+        const newModel = cellData;
+        newModel.distance = props.clickHandler(cellData);
+        setCellData(newModel);
+    };
+
     return (
         <button
-            onClick={() => {props.clickHandler(props.CellModel)}}
-            className={`GameButton ${props.CellModel.distance}`}/>
+            onClick={() => {setCellData(props.clickHandler(cellData))}}
+            className={`GameButton ${cellData.distance}`}/>
     )
 }
 

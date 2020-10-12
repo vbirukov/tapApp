@@ -83,6 +83,7 @@ class Game extends Component {
     buttonClick(cellModel) {
         const x = cellModel.coords.x;
         const y = cellModel.coords.y;
+        let result = '';
         this.setState({
             clickCounter: this.state.clickCounter + 1,
             attempsLeft: BASE_ATTEMPTS + this.props.payedAttempts - this.state.clickCounter - 1
@@ -99,50 +100,47 @@ class Game extends Component {
             });
             this.props.victoryMessage();
             winSound.play();
-            return
+            return 'win'
         }
         const distanceToWin = this.getDistance(x, y);
         const newBoard = [...this.state.board];
         if (this.state.prevDistance) {
             if (distanceToWin === 1) {
-                newBoard[y][x].distance = 'hot';
+                result = 'hot';
                 this.setState({
-                    board: newBoard,
                     headerCaption: 'Горячо'
                 });
                 successSound.play();
             } else if (this.state.prevDistance > distanceToWin) {
-                newBoard[y][x].distance = 'warm';
+                result = 'warm';
                 this.setState({
-                    board: newBoard,
                     headerCaption: 'Теплее'
                 });
                 successSound.play();
             } else if (this.state.prevDistance < distanceToWin) {
-                newBoard[y][x].distance = 'cold';
+                result = 'cold';
                 this.setState({
-                    board: newBoard,
                     headerCaption: 'Холоднее'
                 });
                 coldSound.play();
             }
         } else {
             if (distanceToWin === 1) {
-                newBoard[y][x].distance = 'hot';
+                result = 'hot';
                 this.setState({
                     board: newBoard,
                     headerCaption: 'Горячо'
                 });
                 coldSound.play();
             } else if (distanceToWin > 1 && distanceToWin < 4) {
-                newBoard[y][x].distance = 'warm';
+                result = 'warm';
                 this.setState({
                     board: newBoard,
                     headerCaption: 'Тепло'
                 });
                 successSound.play();
             } else {
-                newBoard[y][x].distance = 'cold';
+                result = 'cold';
                 this.setState({
                     board: newBoard,
                     headerCaption: 'Холодно'
@@ -153,6 +151,7 @@ class Game extends Component {
         this.setState({
             prevDistance: distanceToWin
         });
+        return result
     }
 
     getDistance(x, y) {
