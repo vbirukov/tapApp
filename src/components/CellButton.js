@@ -6,12 +6,6 @@ const CellButton = (props) => {
 
     const {cellModel, setCellData} = useState(props)
 
-    const clickHandler = () => {
-        const newModel = cellModel;
-        newModel.distance = props.clickHandler(cellModel);
-        setCellData(newModel);
-    };
-
     return (
         <button
             onClick={() => {setCellData(props.clickHandler(cellModel))}}
