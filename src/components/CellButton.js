@@ -4,18 +4,18 @@ import './Button.css'
 
 const CellButton = (props) => {
 
-    const {cellModel, setCellData} = useState(props)
+    const {cellData, setCellData} = useState(props.CellModel);
 
     const clickHandler = () => {
-        const newModel = cellModel;
-        newModel.distance = props.clickHandler(cellModel);
+        const newModel = cellData;
+        newModel.distance = props.clickHandler(cellData);
         return newModel;
     };
 
     return (
         <button
-            onClick={() => {setCellData(props.clickHandler(cellModel))}}
-            className={`GameButton ${cellModel.distance}`}/>
+            onClick={() => {setCellData(props.clickHandler(cellData))}}
+            className={`GameButton ${cellData.distance}`}/>
     )
 }
 
