@@ -81,6 +81,9 @@ class Game extends Component {
     }
 
     buttonClick(cellModel) {
+        if (this.state.isFinished) {
+            return;
+        }
         const x = cellModel.coords.x;
         const y = cellModel.coords.y;
         let result = '';
@@ -88,12 +91,13 @@ class Game extends Component {
             clickCounter: this.state.clickCounter + 1,
             attempsLeft: BASE_ATTEMPTS + this.props.payedAttempts - this.state.clickCounter - 1
         });
-        if (this.state.clickCounter === 2 || this.state.clickCounter === 5 || this.state.clickCounter === 8) {
+        if (!(this.state.clickCounter + 1 % 3)) {
             this.showAd();
         } else if (this.state.attempsLeft === 1) {
             this.showBuyMoreTaps();
         }
-        if ((this.props.winCoord.x === x && this.props.winCoord.y === y) || this.state.isFinished) {
+        if ((this.props.winCoord.x === x && this.props.winCoord.y === y)) {
+            result = 'success';
             this.setState({
                 headerCaption: 'Победа!',
                 isFinished: true
