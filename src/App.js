@@ -196,7 +196,7 @@ class App extends Component {
 					selectPartner={this.selectPartner.bind(this)} />
 				<Game
 					id='game'
-					victoryMessage={this.victoryMessage}
+					victoryMessage={this.victoryMessage.bind(this)}
 					partner={this.state.nearestPartner}
 					winCoord={this.state.winCoord}
 					showBuyMoreTaps={this.showMoney}
