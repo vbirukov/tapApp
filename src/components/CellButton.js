@@ -14,7 +14,10 @@ const CellButton = (props) => {
 
     return (
         <button
-            onClick={() => {setCellData(clickHandler())}}
+            onClick={() => {
+                let newModel = clickHandler();
+                setCellData(newModel)
+            }}
             className={`GameButton ${cellData.distance}`}/>
     )
 }
