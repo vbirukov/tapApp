@@ -4,7 +4,13 @@ import './Button.css'
 
 const CellButton = (props) => {
 
-    const {cellModel} = useState(props)
+    const {cellModel, setCellData} = useState(props)
+
+    const clickHandler = () => {
+        const newModel = cellModel;
+        newModel.distance = props.clickHandler(cellModel);
+        return newModel;
+    };
 
     return (
         <button
