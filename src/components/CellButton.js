@@ -4,7 +4,7 @@ import './Button.css'
 
 const CellButton = (props) => {
 
-    const {cellModel, setCellData} = useState(props)
+    const {cellModel} = useState(props)
 
     return (
         <button
