@@ -4,7 +4,7 @@ import './Button.css'
 
 const CellButton = (props) => {
 
-    const {cellData, setCellData} = useState(props.CellModel);
+    const [cellData, setCellData] = useState(props.CellModel);
 
     const clickHandler = () => {
         const newModel = cellData;
