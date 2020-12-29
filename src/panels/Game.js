@@ -104,7 +104,7 @@ class Game extends Component {
             });
             this.props.victoryMessage();
             winSound.play();
-            return 'win'
+            return result
         }
         const distanceToWin = this.getDistance(x, y);
         const newBoard = [...this.state.board];
