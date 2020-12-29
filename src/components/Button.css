@@ -14,6 +14,11 @@
 }
 
 .GameButton.warm {
+    background-color: rgb(155, 203, 255);
+    box-shadow: inset 1px 1px 1px rgb(181, 200, 255);
+}
+
+.GameButton.warm {
     background-color: rgb(60, 147, 255);
     box-shadow: inset 1px 1px 1px rgb(181, 200, 255);
 }
