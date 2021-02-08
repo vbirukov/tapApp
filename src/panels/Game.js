@@ -86,7 +86,7 @@ class Game extends Component {
     }
 
     buttonClick(cellModel) {
-        if (this.state.isFinished) {
+        if (this.state.isFinished || this.state.attempsLeft < 1) {
             return;
         }
         const x = cellModel.coords.x;
