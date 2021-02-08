@@ -86,7 +86,7 @@ class Game extends Component {
     }
 
     buttonClick(cellModel) {
-        if (this.state.isFinished || this.state.attempsLeft < 1) {
+        if (this.state.isFinished) {
             return;
         }
         const x = cellModel.coords.x;
@@ -98,7 +98,7 @@ class Game extends Component {
         });
         if (this.timeToShowAd(TURNS_BETWEEN_ADS)) {
             this.showAd();
-        } else if (this.state.attempsLeft === 1) {
+        } else if (this.state.attempsLeft <= 1) {
             this.showBuyMoreTaps();
         }
         if ((this.props.winCoord.x === x && this.props.winCoord.y === y)) {
