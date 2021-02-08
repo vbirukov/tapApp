@@ -199,7 +199,7 @@ class App extends Component {
 					victoryMessage={this.victoryMessage.bind(this)}
 					partner={this.state.nearestPartner}
 					winCoord={this.state.winCoord}
-					showBuyMoreTaps={this.showMoney}
+					showBuyMoreTaps={this.showMoney.bind(this)}
 					payedAttempts={this.state.payedAttempts}
 					go={this.go.bind(this)} />
 			</View>

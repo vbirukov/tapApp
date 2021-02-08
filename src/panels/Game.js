@@ -10,6 +10,7 @@ import Board from "../components/Board";
 import './Game.css';
 
 const BASE_ATTEMPTS = 10;
+const TURNS_BETWEEN_ADS = 3;
 const osName = platform();
 
 const successSound = new Audio('/audio/click_02.mp3');
@@ -80,6 +81,10 @@ class Game extends Component {
         this.props.showBuyMoreTaps();
     }
 
+    timeToShowAd(eachTurns) {
+        return ((this.state.clickCounter + 1) % eachTurns) === 0;
+    }
+
     buttonClick(cellModel) {
         if (this.state.isFinished) {
             return;
@@ -91,7 +96,7 @@ class Game extends Component {
             clickCounter: this.state.clickCounter + 1,
             attempsLeft: BASE_ATTEMPTS + this.props.payedAttempts - this.state.clickCounter - 1
         });
-        if (!(this.state.clickCounter + 1 % 3)) {
+        if (this.timeToShowAd(TURNS_BETWEEN_ADS)) {
             this.showAd();
         } else if (this.state.attempsLeft === 1) {
             this.showBuyMoreTaps();
