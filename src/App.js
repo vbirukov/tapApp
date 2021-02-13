@@ -12,7 +12,7 @@ import Home from './panels/Home';
 import Game from './panels/Game';
 
 const PARTNER_FOUND = 'partner_found';
-const MODAL_CARD_TO_THE_WALL = 'push_to_wall';
+const MODAL_CARD_VICTORY = 'push_to_wall';
 const MODAL_CARD_MONEY_SEND = 'money';
 
 class App extends Component {
