@@ -28,7 +28,7 @@ class App extends Component {
 			fetchedUser: null,
 			popout: <ScreenSpinner size='large' />,
 			payedAttempts: 0,
-			nearestPartner: {
+			selectedPartner: {
 				coords: [55.75, 37.57],
 				name: 'Default Location'
 			},
@@ -42,14 +42,11 @@ class App extends Component {
 			.then((data) => {
 				let partners = PARTNERS;
 				let shortestDistance = Math.sqrt(Math.abs((data.lat - partners[0].coords[0])^2 + (data.long - partners[0].coords[1])^2));
-				this.setState({
-					nearestPartner: partners[0]
-				});
 				partners.forEach((partner, index) => {
 					let currentDistance = Math.sqrt(Math.abs((data.lat - partner.coords[0])^2 + (data.long - partner.coords[1])^2));
 					if (currentDistance < shortestDistance) {
 						this.setState({
-							nearestPartner: partner
+							selectedPartner: partner
 						});
 					}
 				});
@@ -60,7 +57,17 @@ class App extends Component {
 			});
 	}
 
-	selectPartner = () => {
+	selectPartner(index) {
+		this.setState({
+			selectedPartner: PARTNERS[index]
+		});
+		this.setState({
+				activeModal: PARTNER_FOUND
+			}
+		);
+	}
+
+	goToPartnersList = () => {
 		this.setState({
 			activePanel: 'partnersList'
 		});
@@ -93,13 +100,13 @@ class App extends Component {
 
 	pushToTheWall() {
 		bridge.send("VKWebAppShowWallPostBox", {
-			"message": "Я выиграл чашку кофе в культовой игре Горячо-Холодно, попробуй и ты. https://vk.com/app7341785_799258"
+			"message": "Я выиграл {{this.selectedPartner.prizeForModal}} в культовой игре Горячо-Холодно, попробуй и ты. https://vk.com/app7341785_799258"
 		});
 	}
 
-	victoryMessage() {
+	victoryMessage(prize) {
 		this.setState({
-			activeModal: MODAL_CARD_TO_THE_WALL
+			activeModal: MODAL_CARD_VICTORY
 		})
 	}
 
@@ -122,7 +129,7 @@ class App extends Component {
 				<ModalCard
 					id={'partner_found'}
 					header="Ближайшее предложение"
-					caption={this.state.nearestPartner.name}
+					caption={this.state.selectedPartner.name}
 					actions={[{
 						title: 'Выиграть приз',
 						mode: 'primary',
@@ -133,23 +140,24 @@ class App extends Component {
 							});
 						}
 					}]} >
-					<h3>Вы можете выиграть: {this.state.nearestPartner.prize}</h3>
+					<h3>Вы можете выиграть: {this.state.selectedPartner.prize}</h3>
 					<YMaps>
 						<div className='flex-center'>
-							<Map defaultState={{ center: [...this.state.nearestPartner.coords], zoom: 9 }} >
-								<Placemark geometry={[...this.state.nearestPartner.coords]} />
+							<Map defaultState={{ center: [...this.state.selectedPartner.coords], zoom: 9 }} >
+								<Placemark geometry={[...this.state.selectedPartner.coords]} />
 							</ Map>
 						</div>
 					</YMaps>
 				</ModalCard>
 				<ModalCard
-					id={MODAL_CARD_TO_THE_WALL}
+					id={MODAL_CARD_VICTORY}
 					onClose={() => this.setState({
 						activeModal: null
 					})}
-					header="Хотите рассказать о победе на своей стене?"
+					header="Поздравляем. вы выиграли {{this.selectedPartner.prizeForModal}}"
+					caption="Для получения приза предъявите на кассе этот код: {{this.selectedPartner.coupon}}"
 					actions={[{
-						title: 'Разместить на стене',
+						title: 'Поделиться в ленте',
 						mode: 'primary',
 						action: () => {
 							this.pushToTheWall();
@@ -197,7 +205,7 @@ class App extends Component {
 				<Game
 					id='game'
 					victoryMessage={this.victoryMessage.bind(this)}
-					partner={this.state.nearestPartner}
+					partner={this.state.selectedPartner}
 					winCoord={this.state.winCoord}
 					showBuyMoreTaps={this.showMoney.bind(this)}
 					payedAttempts={this.state.payedAttempts}

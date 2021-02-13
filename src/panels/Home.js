@@ -38,19 +38,19 @@ const Home = ({ id, go, fetchedUser, findPartner, selectPartner }) => {
 					<Button
 						size="l"
 						level="2"
-						onClick={findPartner}>
+						onClick={selectPartner(0)}>
 						Чашка кофе
 					</Button>
 					<Button
 						size="l"
 						level="2"
-						onClick={findPartner}>
+						onClick={selectPartner(1)}>
 						Скидка
 					</Button>
 					<Button
 						size="l"
 						level="2"
-						onClick={findPartner}>
+						onClick={selectPartner(2)}>
 						АВТОМОБИЛЬ!!!
 					</Button>
 				</div>
