@@ -16,13 +16,13 @@ const PartnersList = ({ id, go, fetchedUser, findPartner, selectPartner }) => {
 
             <Group title="Prizes List">
                 <Div>
-                    <Button size="xl" level="2" onClick={findPartner}>
+                    <Button size="xl" level="2" onClick={selectPartner}>
                         Чашка кофе
                     </Button>
-                    <Button size="xl" level="2" onClick={findPartner}>
+                    <Button size="xl" level="2" onClick={selectPartner}>
                         Скидка
                     </Button>
-                    <Button size="xl" level="2" onClick={findPartner}>
+                    <Button size="xl" level="2" onClick={selectPartner}>
                         АВТОМОБИЛЬ!!!
                     </Button>
                 </Div>
