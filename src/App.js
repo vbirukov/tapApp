@@ -47,6 +47,7 @@ class App extends Component {
 				partners.forEach((partner, index) => {
 					let currentDistance = Math.sqrt(Math.abs((data.lat - partner.coords[0])^2 + (data.long - partner.coords[1])^2));
 					if (currentDistance < shortestDistance) {
+						this.state = this.getInitState();
 						this.setState({
 							selectedPartner: partner
 						});
@@ -60,6 +61,7 @@ class App extends Component {
 	}
 
 	selectPartner(index) {
+		this.state = this.getInitState();
 		this.setState({
 			selectedPartner: PARTNERS[index]
 		});
