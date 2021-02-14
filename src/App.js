@@ -30,7 +30,9 @@ class App extends Component {
 			payedAttempts: 0,
 			selectedPartner: {
 				coords: [55.75, 37.57],
-				name: 'Default Location'
+				name: 'Default Location',
+				prizeForModal: '',
+				prize: ''
 			},
 			activeModal: null,
 			winCoord: {x: Math.floor(Math.random() * 10) + 1, y: Math.floor(Math.random() * 10) + 1}
