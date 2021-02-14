@@ -156,8 +156,8 @@ class App extends Component {
 					onClose={() => this.setState({
 						activeModal: null
 					})}
-					header={'Поздравляем. вы выиграли ' + this.selectedPartner.prizeForModal}
-					caption={"Для получения приза предъявите на кассе этот код: " + this.selectedPartner.coupon}
+					header={'Поздравляем. вы выиграли ' + this.state.selectedPartner.prizeForModal}
+					caption={"Для получения приза предъявите на кассе этот код: " + this.state.selectedPartner.coupon}
 					actions={[{
 						title: 'Поделиться в ленте',
 						mode: 'primary',
