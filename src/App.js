@@ -112,7 +112,7 @@ class App extends Component {
 
 	addAttempts() {
 		this.setState({
-			payedAttempts: 3
+			payedAttempts: this.state.payedAttempts + 3
 		});
 	}
 
