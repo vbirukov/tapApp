@@ -90,11 +90,17 @@ class Game extends Component {
         return ((this.state.clickCounter + 1) % eachTurns) === 0;
     }
 
+    setClicked(cellModel) {
+        if (!cellModel.clicked) {
+            cellModel.clicked = true;
+        }
+    }
+
     buttonClick(cellModel) {
         if (this.state.isFinished || cellModel.clicked) {
             return;
         }
-        cellModel.setClicked();
+        this.setClicked();
         if (this.state.attempsLeft < 1) {
             this.showBuyMoreTaps();
             return;
