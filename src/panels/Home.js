@@ -29,26 +29,26 @@ const Home = ({ id, go, fetchedUser, findPartner, selectPartner }) => {
 			<Group title="Navigation Example">
 				<Div>
 					<Button size="xl" level="2" onClick={findPartner}>
-						Найти ближайшего партнера
+						Найти ближайшее предложение
 					</Button>
 				</Div>
 			</Group>
 			<Group header={<Header mode="secondary">Возможные призы</Header>}>
-				<div className={'flexCenter'} >
+				<div className={'offers'} >
 					<Button
-						size="l"
+						size="xl"
 						level="2"
 						onClick={() => {selectPartner(0)}}>
 						Чашка кофе
 					</Button>
 					<Button
-						size="l"
+						size="xl"
 						level="2"
 						onClick={() => {selectPartner(1)}}>
 						Скидка
 					</Button>
 					<Button
-						size="l"
+						size="xl"
 						level="2"
 						onClick={() => {selectPartner(2)}}>
 						АВТОМОБИЛЬ!!!
