@@ -44,6 +44,11 @@ class Game extends Component {
             for (let x = 0; x < width; x++ ) {
                 row.push({
                     clicked: false,
+                    setClicked: () => {
+                        if (!this.clicked) {
+                            this.clicked = true;
+                        }
+                    },
                     distance: null,
                     coords: {
                         x,
@@ -86,9 +91,10 @@ class Game extends Component {
     }
 
     buttonClick(cellModel) {
-        if (this.state.isFinished) {
+        if (this.state.isFinished || cellModel.clicked) {
             return;
         }
+        cellModel.setClicked();
         if (this.state.attempsLeft < 1) {
             this.showBuyMoreTaps();
             return;
